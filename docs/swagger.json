@@ -1,0 +1,186 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API de Gerenciamento de Tarefas",
+      "version": "1.0.0",
+      "description": "Documentação da API para gerenciar tarefas usando Node.js, Sequelize e Swagger."
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000",
+        "description": "Servidor Local"
+      }
+    ],
+    "paths": {
+      "/tasks": {
+        "get": {
+          "summary": "Lista todas as tarefas",
+          "responses": {
+            "200": {
+              "description": "Lista de tarefas",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Task"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Cria uma nova tarefa",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewTask"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Tarefa criada com sucesso",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Erro ao criar tarefa"
+            }
+          }
+        }
+      },
+      "/tasks/{id}": {
+        "put": {
+          "summary": "Atualiza uma tarefa",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID da tarefa a ser atualizada",
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateTask"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Tarefa atualizada com sucesso",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Tarefa não encontrada"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Exclui uma tarefa",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID da tarefa a ser excluída",
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Tarefa excluída com sucesso"
+            },
+            "404": {
+              "description": "Tarefa não encontrada"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Task": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "dueDate": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "NewTask": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "dueDate": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "UpdateTask": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "dueDate": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    }
+  }
+  
